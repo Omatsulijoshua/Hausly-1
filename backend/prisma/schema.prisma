@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password      String?
+  name          String
+  phone         String?   @unique
+  role          Role      @default(TENANT)
+  status        UserStatus @default(ACTIVE)
+  isVerified    Boolean   @default(false)
+  avatarUrl     String?
+  listings      Listing[]
+  messagesSent  Message[] @relation("SentMessages")
+  messagesRecv  Message[] @relation("ReceivedMessages")
+  reports       Report[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum Role {
+  TENANT
+  LANDLORD
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  BANNED
+  SUSPENDED
+}
+
+model Listing {
+  id           String         @id @default(uuid())
+  userId       String
+  user         User           @relation(fields: [userId], references: [id])
+  title        String
+  description  String
+  price        Float
+  address      String
+  latitude     Float
+  longitude    Float
+  propertyType String
+  rooms        Int
+  facilities   String[]
+  images       ListingImage[]
+  reports      Report[]
+  status       ListingStatus  @default(PENDING)
+  createdAt    DateTime       @default(now())
+}
+
+enum ListingStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  HIDDEN
+}
+
+model ListingImage {
+  id        String  @id @default(uuid())
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id])
+  url       String
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  senderId   String
+  receiverId String
+  content    String
+  imageUrl   String?
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model Report {
+  id        String   @id @default(uuid())
+  userId    String
+  listingId String?
+  reason    String
+  user      User     @relation(fields: [userId], references: [id])
+  listing   Listing? @relation(fields: [listingId], references: [id])
+  createdAt DateTime @default(now())
+}
