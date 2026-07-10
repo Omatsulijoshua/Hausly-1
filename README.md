@@ -7,7 +7,7 @@ A modern property marketplace stack designed to connect landlords and tenants se
 The entire stack is live and accessible online:
 
 *   **Tenant Web Portal (Next.js)**: [https://web-five-iota-83.vercel.app](https://web-five-iota-83.vercel.app)
-*   **Admin Dashboard (Vite React)**: [https://bandup-ielts-admin.vercel.app](https://bandup-ielts-admin.vercel.app)
+*   **Admin Dashboard (Vite React)**: [https://hausly-admin.vercel.app](https://hausly-admin.vercel.app)
 *   **Tenant/Landlord Web App (Flutter)**: [https://hausly-app.vercel.app](https://hausly-app.vercel.app)
 *   **Backend API (NestJS)**: [https://hausly-backend-fs0v.onrender.com](https://hausly-backend-fs0v.onrender.com)
 *   **PostgreSQL Cloud Database**: Hosted on [Neon](https://neon.tech/)
