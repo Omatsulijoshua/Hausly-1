@@ -15,13 +15,13 @@ We have already pushed the database schema and seeded the tables with your platf
 
 ## 2. Deploying NestJS Backend (Render or Railway)
 
-The backend has been configured to build with **Docker** for universal container compatibility. We created a `render.yaml` blueprint in the repository root for simple one-click deployment on Render.
+The backend has been configured to deploy using Render's native **Node.js runtime** on the **Free Plan** to avoid any hosting costs. We created a `render.yaml` blueprint in the repository root for simple one-click deployment.
 
 ### Option A: Deploy to Render (Recommended)
 1. Commit the newly added files to your repository (e.g. GitHub or GitLab).
 2. Log in to [Render Console](https://dashboard.render.com).
 3. Click **New +** > **Blueprint**.
-4. Connect your repository. Render will automatically detect `render.yaml` and configure the **hausly-backend** service.
+4. Connect your repository. Render will automatically detect `render.yaml` and configure the **hausly-backend** service on the **Free tier**.
 5. Fill in the required environment variables:
     *   `DATABASE_URL`: `postgresql://neondb_owner:npg_sJeF1P0QVhNq@ep-autumn-sunset-ahlc3r1u-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require` (Pooled URL)
     *   `DIRECT_URL`: `postgresql://neondb_owner:npg_sJeF1P0QVhNq@ep-autumn-sunset-ahlc3r1u.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require` (Direct URL)
