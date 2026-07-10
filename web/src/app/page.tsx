@@ -96,7 +96,7 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchListings() {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://hausly-backend-fs0v.onrender.com';
         const res = await fetch(`${apiUrl}/listings`);
         if (!res.ok) throw new Error("Could not load backend data");
         const data = await res.json();

@@ -10,7 +10,7 @@ interface Report {
   listing?: { id: string; title: string };
 }
 
-const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const apiUrl = import.meta.env.VITE_API_URL || 'https://hausly-backend-fs0v.onrender.com';
 
 const ReportsPage = () => {
   const [reports, setReports] = useState<Report[]>([]);
