@@ -1,17 +1,16 @@
 services:
   - type: web
     name: hausly-backend
-    runtime: docker
-    dockerfilePath: backend/Dockerfile
-    dockerContext: backend
+    runtime: node
+    plan: free
+    buildCommand: cd backend && npm install && npx prisma generate && npm run build
+    startCommand: cd backend && node dist/src/main.js
     envVars:
       - key: PORT
         value: 3000
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        sync: false
-      - key: DIRECT_URL
         sync: false
       - key: JWT_SECRET
         sync: false
