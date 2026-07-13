@@ -82,9 +82,10 @@ const DashboardHome = () => {
 
   return (
     <div className="p-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard label="Total Users" value={stats.users.toString()} change="Real-time" />
         <StatCard label="Active Listings" value={stats.listings.toString()} change="Approved" />
+        <StatCard label="Total Revenue" value={"$" + (stats.listings * 29).toLocaleString()} change="From Listings" color="green" />
         <StatCard label="New Reports" value={stats.reports.toString()} change="Requires Action" color={stats.reports > 0 ? 'red' : 'green'} />
       </div>
 
