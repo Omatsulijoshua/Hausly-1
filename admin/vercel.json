@@ -1,4 +1,5 @@
 {
+  "name": "hausly-admin",
   "cleanUrls": true,
   "rewrites": [
     {

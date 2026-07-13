@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Mail, Lock, LogIn, AlertTriangle } from 'lucide-react';
+import axios from 'axios';
+
+const apiUrl = import.meta.env.VITE_API_URL || 'https://hausly-backend-fs0v.onrender.com';
 
 const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   const [email, setEmail] = useState('');
@@ -7,20 +10,29 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      if (email === 'admin@hausly.com' && password === 'password123') {
-        onLogin();
-      } else {
-        setError('Invalid admin credentials. Please check your email and password.');
+    try {
+      const response = await axios.post(`${apiUrl}/auth/login`, { email, password });
+      const { access_token, user } = response.data;
+      
+      if (user.role !== 'ADMIN') {
+        setError('Access denied. Only administrators can access this portal.');
+        setIsLoading(false);
+        return;
       }
-    }, 1200);
+
+      localStorage.setItem('token', access_token);
+      localStorage.setItem('user', JSON.stringify(user));
+      onLogin();
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Invalid credentials or connection issue.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

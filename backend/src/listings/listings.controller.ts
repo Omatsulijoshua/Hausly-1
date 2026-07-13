@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Param, Query, UseGuards, Request, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Body, Param, Query, UseGuards, Request, UseInterceptors, UploadedFiles } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ListingsService } from './listings.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { ListingStatus } from '@prisma/client';
 
 @Controller('listings')
 export class ListingsController {
@@ -56,5 +57,20 @@ export class ListingsController {
       ...createData,
       imageUrls,
     });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('admin/all')
+  async adminFindAll(@Query() filters: any) {
+    return this.listingsService.adminFindAll(filters);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/status')
+  async updateStatus(
+    @Param('id') id: string,
+    @Body('status') status: ListingStatus,
+  ) {
+    return this.listingsService.updateStatus(id, status);
   }
 }

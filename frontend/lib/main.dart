@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
-import 'package:device_preview/device_preview.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    ProviderScope(
-      child: DevicePreview(
-        enabled: true, // Set to false to disable
-        builder: (context) => const HauslyApp(),
-      ),
+    const ProviderScope(
+      child: HauslyApp(),
     ),
   );
 }
@@ -28,8 +24,6 @@ class HauslyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       routerConfig: router,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
     );
   }
 }

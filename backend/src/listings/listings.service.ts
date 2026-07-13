@@ -111,4 +111,31 @@ export class ListingsService {
       },
     });
   }
+
+  async adminFindAll(filters: any) {
+    const { status } = filters;
+    return this.prisma.listing.findMany({
+      where: {
+        status: status ? status : undefined,
+      },
+      include: {
+        images: true,
+        user: {
+          select: {
+            name: true,
+            avatarUrl: true,
+            isVerified: true,
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async updateStatus(id: string, status: ListingStatus) {
+    return this.prisma.listing.update({
+      where: { id },
+      data: { status },
+    });
+  }
 }
